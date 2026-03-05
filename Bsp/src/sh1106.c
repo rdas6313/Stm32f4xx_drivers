@@ -33,14 +33,14 @@ void SH1106_init(void){
 */
 void SH1106_show(uint8_t *data){
     
-    
+    #define TEMP_SIZE (SH1106_WIDTH + 3)
     for(int i = 0; i < SH1106_PAGE_MAX; i++){
-        uint8_t temp[SH1106_WIDTH + 1] = {SH1106_DATA_CONTROL};
+        uint8_t temp[TEMP_SIZE] = {SH1106_DATA_CONTROL,0x00,0x00};
         memcpy(temp+1,(data + (SH1106_WIDTH * i)),SH1106_WIDTH);
 
         set_page(i);
         set_column(0);
-        i2c_send_SH1106(SH1106_I2C_ADDRESS,temp,(SH1106_WIDTH+1));
+        i2c_send_SH1106(SH1106_I2C_ADDRESS,temp,TEMP_SIZE);
     }
 
 }
@@ -51,13 +51,13 @@ void SH1106_show(uint8_t *data){
 * @return None
 */
 void SH1106_clear(void){
-    
-    uint8_t data[SH1106_WIDTH+1] = {SH1106_DATA_CONTROL};
+    #define DATA_SIZE (SH1106_WIDTH + 3)
+    uint8_t data[DATA_SIZE] = {SH1106_DATA_CONTROL,0x00,0x00};
     
     for(int i=0;i<SH1106_PAGE_MAX;i++){
         set_page(i);
         set_column(0);
-        i2c_send_SH1106(SH1106_I2C_ADDRESS,data,SH1106_WIDTH+1);
+        i2c_send_SH1106(SH1106_I2C_ADDRESS,data,DATA_SIZE);
     }
 
 

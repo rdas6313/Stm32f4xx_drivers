@@ -5,3 +5,4 @@ CMakeFiles/
 CMakePresets.json
 build.ninja
 cmake_install.cmake
+build/

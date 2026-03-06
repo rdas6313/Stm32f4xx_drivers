@@ -29,6 +29,7 @@ extern void initialise_monitor_handles(void);
 /* Dummy Image */
 
 extern const unsigned char lion [];
+extern const unsigned char maa [] ;
 /* Dummy Image end */
 
 
@@ -102,9 +103,20 @@ int main(){
 
     SH1106_init();
 
-    SH1106_show((uint8_t*)lion);
+    while(1){
+        SH1106_show((uint8_t*)lion);
+        for(int i=0;i<64;i++){
+            SH1106_set_display_line(i);
+            Delay_ms(1000);
+        }
 
-    while(1);
+        for(int i=63;i>=0;i--){
+            SH1106_set_display_line(i);
+            Delay_ms(1000);
+        }
+    }
+
+    
    
     return 0;
 }

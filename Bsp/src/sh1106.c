@@ -120,6 +120,15 @@ static void set_page(uint8_t page){
 }
 
 /*
+* @brief This function set the initial line of DDRAM from which image will start displaying. Basically shifts the image upwards.
+* @param line: line no from which display start showing the image. 
+* @return None
+*/
+void SH1106_set_display_line(uint8_t line){
+    i2c_send_SH1106(SH1106_I2C_ADDRESS, (uint8_t[]){SH1106_COMMAND_CONTROL,(SH1106_DISPLAY_START_LINE_COMMAND | (line & 0x3F))}, 2);
+}
+
+/*
 * @brief This function is the user callback to i2c send. user must implement i2c send command inside this.
 * @param address: i2c slave address
 * @param data: pointer of i2c data 

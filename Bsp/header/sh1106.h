@@ -50,6 +50,7 @@
 #define SH1106_COLUMN_LOWER_ADDRESS_COMMAND 0x00
 #define SH1106_COLUMN_HIGHER_ADDRESS_COMMAND 0x10
 #define SH1106_PAGE_ADDRESS_COMMAND 0xB0
+#define SH1106_DISPLAY_START_LINE_COMMAND 0x40
 
 #define SH1106_DISPLAY_ON 1
 #define SH1106_DISPLAY_OFF 0
@@ -62,7 +63,7 @@ void SH1106_init(void);
 void SH1106_show(uint8_t *data);
 void SH1106_clear(void);
 void SH1106_display_on_off(uint8_t on);
-// void SH1106_set_display_line(uint8_t line);
+void SH1106_set_display_line(uint8_t line);
 // void SH1106_change_orientation(uint8_t horizontal);
 // void SH1106_test_display(void);
 // void SH1106_set_brightness(uint8_t brightness);

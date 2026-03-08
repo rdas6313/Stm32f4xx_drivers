@@ -36,7 +36,7 @@ void SH1106_show(uint8_t *data){
     #define TEMP_SIZE (SH1106_WIDTH + 3)
     for(int i = 0; i < SH1106_PAGE_MAX; i++){
         uint8_t temp[TEMP_SIZE] = {SH1106_DATA_CONTROL,0x00,0x00};
-        memcpy(temp+1,(data + (SH1106_WIDTH * i)),SH1106_WIDTH);
+        memcpy(temp+3,(data + (SH1106_WIDTH * i)),SH1106_WIDTH);
 
         set_page(i);
         set_column(0);

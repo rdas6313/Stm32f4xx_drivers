@@ -13,6 +13,7 @@
 #define SH1106_WIDTH 128
 #define SH1106_HEIGHT 64
 #define SH1106_PAGE_MAX 8
+#define SH1106_BIT_PER_PAGE 8
 
 // default values for all commands to initialize the display
 #define SH1106_LOWER_COL_DEFAULT 0x00

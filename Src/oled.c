@@ -3,7 +3,7 @@
 */
 
 
-#include "../Bsp/header/sh1106.h"
+#include "../Bsp/header/sh1106_graphics.h"
 #include "stm32f4xx_gpio_driver.h"
 #include "stm32f4xx_i2c_driver.h"
 #include "stm32f4xx_timer.h"
@@ -24,16 +24,11 @@
 
 extern void initialise_monitor_handles(void);
 
-
-
 /* Dummy Image */
 
 extern const unsigned char lion [];
 extern const unsigned char maa [] ;
 /* Dummy Image end */
-
-
-
 
 
 I2C_Handle_t I2CHandle1;
@@ -101,17 +96,64 @@ int main(){
     // enbale the I2C peripherals
     I2C_PeripheralControl(I2CHandle1.pI2Cx, ENABLE);
 
-    SH1106_init();
+    // SH1106_init();
 
-    while(1){
-        SH1106_show((uint8_t*)maa);
-        Delay_ms(1000);
-        SH1106_show((uint8_t*)lion);
-        Delay_ms(1000);
+    // while(1){
+    //     SH1106_show((uint8_t*)maa);
+    //     Delay_ms(1000);
+    //     SH1106_show((uint8_t*)lion);
+    //     Delay_ms(1000);
        
-    }
+    // }
 
-    
+
+    gfx_init();
+
+    // for(int i=0;i<64;i++){
+    //     if(i == 0 || i == 63){
+    //         for(int j=0;j<128;j++)
+    //             gfx_draw_pixel(i,j,1);
+    //     }else{
+    //         gfx_draw_pixel(i,0,1);
+    //         gfx_draw_pixel(i,127,1);
+    //     }
+    // }
+
+    // gfx_update_display();
+
+    // Delay_ms(1000);
+
+    // gfx_clear_buffer();
+    // gfx_update_display();
+
+    // Delay_ms(1000);
+
+    gfx_draw_line(0,127,0,0,1);
+
+    gfx_draw_line(63,0,0,0,1);
+
+    gfx_draw_line(63,0,63,127,1);
+
+    gfx_draw_line(0,127,63,127,1);
+
+    gfx_draw_line(0,0,63,127,1);
+
+    gfx_draw_line(0,127,63,0,1);
+
+    gfx_draw_line(31,0,31,127,1);
+
+    gfx_draw_line(0,63,63,63,1);
+
+    gfx_update_display();
+
+    Delay_ms(1000);
+
+
+
+
+
+
+    while(1);
    
     return 0;
 }

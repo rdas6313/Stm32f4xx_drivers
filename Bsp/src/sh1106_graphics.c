@@ -325,20 +325,22 @@ void gfx_draw_fill_rect(uint8_t x, uint8_t y, uint8_t w, uint8_t h,uint8_t color
     }
 }
 
-void gfx_draw_char(uint8_t x, uint8_t y, uint8_t c,uint8_t size){
+void gfx_draw_char(uint8_t x, uint8_t y, uint8_t c,uint8_t size,uint8_t color){
 
-    if(!valid_height(x) || !valid_width(y) || c < 32 || c > 126)
+    if(!valid_height(x) || !valid_width(y) || c < 32 || c > 126 || color > 1)
         return;
 
     for(uint8_t i = 0; i < FONT_WIDTH; i++){
         for(uint8_t j = 0; j < 8; j++){
-            uint8_t color = (font5x7[c-32][i] & ((uint8_t)0x01 << j)) >> j;
+            uint8_t pixel_value = (font5x7[c-32][i] & ((uint8_t)0x01 << j)) >> j;
             uint8_t px = x + j + j * (size - 1);
             uint8_t py = y + i + i * (size - 1);
+
+            uint8_t pixel_color = (~(pixel_value ^ color)) & 0x1;
             
             for(uint8_t sx = 0; sx < size; sx++){
                 for(uint8_t sy = 0; sy < size; sy++){
-                    gfx_draw_pixel(px+sx,py+sy,color);        
+                    gfx_draw_pixel(px+sx,py+sy,pixel_color);        
                 }
             }
         }
@@ -347,7 +349,7 @@ void gfx_draw_char(uint8_t x, uint8_t y, uint8_t c,uint8_t size){
 
 }
 
-void gfx_draw_string(uint8_t x, uint8_t y, const char *str){
+void gfx_draw_string(uint8_t x, uint8_t y, const char *str,const uint8_t size){
 
 }
 

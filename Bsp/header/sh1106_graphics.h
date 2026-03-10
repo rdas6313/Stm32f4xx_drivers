@@ -53,12 +53,11 @@ void gfx_draw_rect(uint8_t x, uint8_t y, uint8_t w, uint8_t h,uint8_t color);
 void gfx_draw_fill_rect(uint8_t x, uint8_t y, uint8_t w, uint8_t h,uint8_t color);
 
 
-
-void gfx_draw_char(uint8_t x, uint8_t y, uint8_t c,uint8_t size);
-
+void gfx_draw_char(uint8_t x, uint8_t y, uint8_t c,uint8_t size,uint8_t color);
 
 
-void gfx_draw_string(uint8_t x, uint8_t y, const char *str);
+
+void gfx_draw_string(uint8_t x, uint8_t y, const char *str,const uint8_t size);
 
 
 

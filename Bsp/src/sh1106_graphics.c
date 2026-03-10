@@ -36,8 +36,9 @@ void gfx_draw_pixel(uint8_t x,uint8_t y, uint8_t color){
 
 #define swap(x,y) do{int32_t tmp = x; x = y; y = tmp;}while(0)
 #define abs(x) ((x) < 0 ? -(x):(x))
-#define valid_height(x) (x < SH1106_HEIGHT)
-#define valid_width(x) (x < SH1106_WIDTH)
+#define valid_height(x) ((x) < SH1106_HEIGHT)
+#define valid_width(x) ((x) < SH1106_WIDTH)
+#define min(a,b) ((a) < (b) ? (a) : (b))
 
 // implemented Bresenham's line drawing algorithm.
 void gfx_draw_line( uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1, uint8_t color){
@@ -98,13 +99,13 @@ void gfx_draw_rect(uint8_t x, uint8_t y, uint8_t w, uint8_t h,uint8_t color){
         return;
 
     uint8_t x1 = x;
-    uint8_t y1 = y + (w-1);
+    uint8_t y1 = min(y + (w-1),SH1106_WIDTH - 1);
 
-    uint8_t x2 = x + (h-1);
+    uint8_t x2 = min(x + (h-1),SH1106_HEIGHT - 1);
     uint8_t y2 = y;
 
-    uint8_t x3 = x + (h-1);
-    uint8_t y3 = y + (w-1);
+    uint8_t x3 = min(x + (h-1),SH1106_HEIGHT - 1);
+    uint8_t y3 = min(y + (w-1),SH1106_WIDTH - 1);
 
     gfx_draw_line(x,y,x1,y1,color);
     gfx_draw_line(x,y,x2,y2,color);

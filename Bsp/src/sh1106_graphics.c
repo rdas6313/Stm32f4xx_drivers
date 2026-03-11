@@ -364,7 +364,18 @@ void gfx_draw_string(uint8_t x, uint8_t y, const char *str, const uint8_t size, 
 
 
 void gfx_draw_bitmap(uint8_t x, uint8_t y, const uint8_t *bmp, uint8_t w, uint8_t h){
+    
+    if(!valid_height(x) || !valid_width(y) || bmp == NULL ||  !valid_height(x+h-1) || !valid_width(y+w-1))
+        return;
 
+    for(uint8_t i = 0; i < h; i++){
+        for(uint8_t j = 0; j < w; j++){
+            uint32_t current_bit = (uint32_t)i * w + j;
+            uint16_t byte = current_bit / 8;
+            uint8_t bit = 7 - (current_bit % 8);
+            gfx_draw_pixel(x+i,y+j,((bmp[byte] & ((uint8_t)0x01 << bit)) >> bit));    
+        }
+    }
 }
 
 

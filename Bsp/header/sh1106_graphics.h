@@ -67,13 +67,6 @@ void gfx_draw_bitmap(uint8_t x, uint8_t y, const uint8_t *bmp, uint8_t w, uint8_
 
 
 
-void gfx_draw_hline(uint8_t x, uint8_t y, uint8_t w);
-
-void gfx_draw_vline(uint8_t x, uint8_t y, uint8_t h);
-
-
-
-
 
 
 #endif

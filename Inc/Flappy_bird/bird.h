@@ -8,8 +8,8 @@
 
 #define BIRD_INITIAL_POS_X 5
 #define BIRD_INITIAL_POS_Y 15
-#define BIRD_BITMAP_WIDTH 12
-#define BIRD_BITMAP_HEIGHT 12
+#define BIRD_BITMAP_WIDTH 16
+#define BIRD_BITMAP_HEIGHT 8
 
 
 typedef struct Bird{

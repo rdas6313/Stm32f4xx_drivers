@@ -2,11 +2,20 @@
 
 #include "sh1106_graphics.h"
 #include "game.h"
-extern const uint8_t bird_image[];
+extern const uint8_t bird1[];
+extern const uint8_t bird2[];
 
 void bird_render(Bird *this){
-    //gfx_draw_bitmap(this->x,this->y,this->bitmap,this->w,this->h);
-    gfx_draw_fill_rect(this->x,this->y,this->w,this->h,1);
+    static uint8_t index = 0;
+
+    if(index < 2)
+        this->bitmap = (uint8_t*)bird1;
+    else
+        this->bitmap = (uint8_t*)bird2;
+
+    index = (index + 1) % 4;
+
+    gfx_draw_bitmap(this->x,this->y,this->bitmap,this->w,this->h);
 }
 
 void bird_position_update(Bird *this,uint8_t input){
@@ -41,7 +50,7 @@ void bird_init(Bird *this){
     this->detect_collision = bird_detect_collision;
 
     this->type = BIRD;
-    this->bitmap = bird_image;
+    
     this->x = BIRD_INITIAL_POS_X;
     this->y = BIRD_INITIAL_POS_Y;
     this->w = BIRD_BITMAP_WIDTH;

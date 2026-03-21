@@ -24,13 +24,11 @@ static Bird bird;
 static GameState currentGameState = GAME_MENU;
 
 
-void Game_Init(){
-    
-    gfx_init();
-
+static void Game_Init(){
+    scene_len = 0;
 
     for(uint8_t i = 0; i < MAX_FLOOR; i++){
-        floor_init(&floors[i],i);
+        floor_init(&floors[i]);
         scene[scene_len++] = &floors[i];    
     }
 
@@ -42,7 +40,20 @@ void Game_Init(){
     bird_init(&bird);
     scene[scene_len++] = &bird;
 
+}
 
+static void Game_AssetReload(){
+
+    for(uint8_t i = 0; i < scene_len; i++){
+        SceneType *ptype = (SceneType*)scene[i];
+        if(*ptype == FLOOR){
+            ((Floor*)scene[i])->init((Floor*)scene[i],i);
+        }else if(*ptype == PIPE){
+            ((Pipe*)scene[i])->init((Pipe*)scene[i],i < 1);
+        }else{
+            ((Bird*)scene[i])->init((Bird*)scene[i]);
+        }
+    }
 
 }
 
@@ -71,23 +82,33 @@ static void Game_Loop(){
         return;
     }
     Game_Render();
-    Game_Delay(30);
+    Game_Delay(10);
 }
 
 void Game_Start(){
     
+    gfx_init();
+    Game_Init();
+
     while(1){
 
         switch(currentGameState){
             case GAME_MENU:
+            
+                Game_AssetReload();
                 Game_Menu();
                 break;
+
             case GAME_LOOP:
+
                 Game_Loop();
                 break;
+
             case GAME_OVER:
+
                 Game_Over();
                 break;
+
         }
         
     }
@@ -100,7 +121,7 @@ uint8_t Game_Input(){
 }
 
 __attribute__((weak))
-void Game_Delay(uint8_t ms){
+void Game_Delay(uint16_t ms){
     for(uint32_t i = 0; i < 100000;i++);
 }
 

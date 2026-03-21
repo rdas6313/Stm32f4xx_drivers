@@ -7,12 +7,7 @@ void floor_render(Floor *this){
     gfx_draw_line(this->x,this->y, (this->x + this->h - 1),(this->y + this->w - 1),1);
 }
 
-
-void floor_init(Floor *this,uint8_t is_up){
-
-    this->render = floor_render;
-    
-    this->type = FLOOR;
+static void single_floor_init(Floor *this,uint8_t is_up){
 
     if(is_up){
         
@@ -29,6 +24,16 @@ void floor_init(Floor *this,uint8_t is_up){
         this->h = DOWN_FLOOR_HEIGHT;
     
     }
+
+} 
+
+void floor_init(Floor *this){
+
+    this->render = floor_render;
+    
+    this->type = FLOOR;
+
+    this->init = single_floor_init;
      
 }
 

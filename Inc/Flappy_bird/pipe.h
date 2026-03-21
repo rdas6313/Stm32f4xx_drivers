@@ -21,7 +21,7 @@ typedef struct Pipe{
     uint8_t w;
     uint8_t h;
 
-    void (*init)(struct Pipe *this);
+    void (*init)(struct Pipe *this,uint8_t first_pipe);
     void (*render)(struct Pipe *this);
     uint8_t (*detect_collision)(struct Pipe *this,struct Bird *bird);
     void (*position_update)(struct Pipe *this);

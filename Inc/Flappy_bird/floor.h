@@ -27,6 +27,6 @@ typedef struct Floor{
 
 } Floor;
 
-void floor_init(Floor *this,uint8_t is_up);
+void floor_init(Floor *this);
 
 #endif

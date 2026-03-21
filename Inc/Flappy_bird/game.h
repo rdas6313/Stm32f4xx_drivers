@@ -20,10 +20,10 @@ typedef enum GameState{
 } GameState;
 
 
-void Game_Init();
+
 void Game_Start();
 uint8_t Game_Input();
-void Game_Delay(uint8_t ms);
+void Game_Delay(uint16_t ms);
 
 
 

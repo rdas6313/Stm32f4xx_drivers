@@ -23,7 +23,7 @@ typedef struct Bird{
 
     uint8_t *bitmap;
 
-
+    void (*init)(struct Bird *this);
     void (*render)(struct Bird *this);
     void (*position_update)(struct Bird *this,uint8_t input);
     uint8_t (*detect_collision)(struct Bird *this,struct Floor *floor);

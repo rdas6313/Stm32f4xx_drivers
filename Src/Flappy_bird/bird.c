@@ -43,6 +43,13 @@ uint8_t bird_detect_collision(struct Bird *this,struct Floor *floor){
 
 }
 
+static void single_bird_init(Bird *this){
+    this->x = BIRD_INITIAL_POS_X;
+    this->y = BIRD_INITIAL_POS_Y;
+    this->w = BIRD_BITMAP_WIDTH;
+    this->h = BIRD_BITMAP_HEIGHT;
+}
+
 void bird_init(Bird *this){
 
     this->render = bird_render;
@@ -51,9 +58,6 @@ void bird_init(Bird *this){
 
     this->type = BIRD;
     
-    this->x = BIRD_INITIAL_POS_X;
-    this->y = BIRD_INITIAL_POS_Y;
-    this->w = BIRD_BITMAP_WIDTH;
-    this->h = BIRD_BITMAP_HEIGHT;
+    this->init = single_bird_init;
 }
 

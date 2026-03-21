@@ -88,7 +88,7 @@ void delay(uint16_t ms){
     Delay_ms(ms);
 }
 
-void Game_Delay(uint8_t ms){
+void Game_Delay(uint16_t ms){
     Delay_ms(ms);
 }
 
@@ -103,7 +103,7 @@ int main(){
     Init_Timer();
     I2C1_Init();
     
-    Game_Init();
+    
     Game_Start();
     
     while(1);

@@ -3,8 +3,8 @@
 #include <stdlib.h>
 
 
-static uint8_t current_x = PIPE_INITIAL_POS_X;
-static uint8_t current_y = PIPE_INITIAL_POS_Y;
+static uint8_t current_x;
+static uint8_t current_y;
 
 
 void pipe_render(Pipe *this){
@@ -34,27 +34,39 @@ void pipe_position_update(Pipe *this){
     this->y -= 1;
     if(this->y == 255){
         current_x = (current_x + 1) % 2;
-        this->y = 128 + MIN_PIPE_WIDTH_GAP;
+        this->y = SH1106_WIDTH + MIN_PIPE_WIDTH_GAP;
         this->h = rand() % (MAX_PIPE_HEIGHT_GAP - PIPE_BITMAP_HEIGHT + 1) + PIPE_BITMAP_HEIGHT;
-        this->x = current_x * (64 - this->h);
+        this->x = current_x * (SH1106_HEIGHT - this->h);
     }
 }
 
-void pipe_init(Pipe *this){
+void single_pipe_init(Pipe *this,uint8_t first_pipe){
+    if(first_pipe){
+        current_x = PIPE_INITIAL_POS_X;
+        current_y= PIPE_INITIAL_POS_Y;
+    }
 
-    this->render = pipe_render;
-    this->detect_collision = pipe_detect_collision;
-    this->position_update = pipe_position_update;
-
-    this->type = PIPE;
-    
     this->w = PIPE_BITMAP_WIDTH;
     this->h = rand() % (MAX_PIPE_HEIGHT_GAP - PIPE_BITMAP_HEIGHT + 1) + PIPE_BITMAP_HEIGHT;
 
-    this->x = current_x * (64 - this->h);
+    this->x = current_x * (SH1106_HEIGHT - this->h);
     this->y = current_y;
 
     current_x = (current_x + 1) % 2;
     current_y = current_y + MIN_PIPE_WIDTH_GAP;
 }
+
+void pipe_init(Pipe *this){
+    
+
+    this->render = pipe_render;
+    this->detect_collision = pipe_detect_collision;
+    this->position_update = pipe_position_update;
+    this->init = single_pipe_init;
+
+    this->type = PIPE;
+    
+}
+
+
 

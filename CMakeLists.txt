@@ -110,6 +110,46 @@ set(linker_OPTS)
 # information to the project
 include("cmake/vscode_generated.cmake")
 
+# FreeRTOS settings
+set(FREERTOS_PORT GCC_ARM_CM4F CACHE STRING "")
+set(FREERTOS_HEAP 4)
+
+# FreeRTOS config target
+add_library(freertos_config INTERFACE)
+
+target_include_directories(freertos_config SYSTEM INTERFACE
+    ${CMAKE_SOURCE_DIR}/Inc
+)
+
+# # SEGGER first (creates segger + segger_header)
+# add_subdirectory(Thirdparty/Segger)
+
+# FreeRTOS second
+add_subdirectory(Thirdparty/FreeRtos)
+
+
+# FreeRTOS compile options
+set(FREERTOS_COMPILE_OPTS
+    ${cpu_PARAMS} 
+    -Wno-unused-variable 
+    -std=gnu11
+)
+target_compile_options(freertos_kernel PRIVATE ${FREERTOS_COMPILE_OPTS})
+target_compile_options(freertos_kernel_port PRIVATE ${FREERTOS_COMPILE_OPTS})
+
+
+# # FreeRTOS needs SEGGER headers
+# target_link_libraries(freertos_kernel PRIVATE segger_header)
+
+# target_link_libraries(freertos_kernel_port PRIVATE segger_header)
+
+target_link_libraries(freertos_kernel PRIVATE freertos_config)
+
+# target_link_libraries(segger PRIVATE freertos_kernel)
+
+# # SEGGER needs FreeRTOS config
+# target_link_libraries(segger PRIVATE freertos_config)
+
 # Link directories setup
 # Must be before executable is added
 link_directories(${CMAKE_PROJECT_NAME} ${link_DIRS})
@@ -141,7 +181,11 @@ target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
 )
 
 # Add linked libraries
-target_link_libraries(${CMAKE_PROJECT_NAME} ${link_LIBS})
+target_link_libraries(${CMAKE_PROJECT_NAME} 
+    ${link_LIBS}
+    freertos_kernel
+    #segger
+)
 
 # Compiler options
 target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE

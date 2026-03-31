@@ -161,7 +161,7 @@
 
 
 
-// #include "SEGGER_SYSVIEW_FreeRTOS.h"
+#include "SEGGER_SYSVIEW_FreeRTOS.h"
 
 
  

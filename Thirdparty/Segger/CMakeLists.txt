@@ -1,0 +1,28 @@
+cmake_minimum_required(VERSION 3.22)
+
+
+add_library(segger_header INTERFACE)
+
+target_include_directories(segger_header INTERFACE
+${CMAKE_CURRENT_SOURCE_DIR}/Config
+${CMAKE_CURRENT_SOURCE_DIR}/Os
+${CMAKE_CURRENT_SOURCE_DIR}/SEGGER
+${CMAKE_CURRENT_SOURCE_DIR}/SYSVIEW
+${CMAKE_CURRENT_SOURCE_DIR}/RTT
+)
+
+
+add_library(segger)
+
+target_sources(segger PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/SYSVIEW/SEGGER_SYSVIEW.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/Os/SEGGER_SYSVIEW_Config_FreeRTOS.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/Os/SEGGER_SYSVIEW_FreeRTOS.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/Syscalls/SEGGER_RTT_Syscalls_GCC.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/RTT/SEGGER_RTT.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/RTT/SEGGER_RTT_printf.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/RTT/SEGGER_RTT_ASM_ARMv7M.S
+    ${CMAKE_CURRENT_SOURCE_DIR}/Rec/segger_uart.c
+)
+
+target_link_libraries(segger PUBLIC segger_header)

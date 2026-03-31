@@ -55,9 +55,14 @@ set(sources_SRCS
     ${DRIVER_SRCS}
 )
 
+set(CMSIS_HEADER 
+${CMAKE_SOURCE_DIR}/Drivers/Inc/CMSIS/Device/ST/STM32F4xx/Include
+${CMAKE_SOURCE_DIR}/Drivers/Inc/CMSIS/Include)
+
 # Add driver include directory
 set(include_DIRS
     ${include_DIRS}
+    ${CMSIS_HEADER}    
     ${CMAKE_SOURCE_DIR}/Drivers/Inc
     ${CMAKE_SOURCE_DIR}/Bsp/header
 )
@@ -121,8 +126,8 @@ target_include_directories(freertos_config SYSTEM INTERFACE
     ${CMAKE_SOURCE_DIR}/Inc
 )
 
-# # SEGGER first (creates segger + segger_header)
-# add_subdirectory(Thirdparty/Segger)
+# SEGGER first (creates segger + segger_header)
+add_subdirectory(Thirdparty/Segger)
 
 # FreeRTOS second
 add_subdirectory(Thirdparty/FreeRtos)
@@ -138,17 +143,20 @@ target_compile_options(freertos_kernel PRIVATE ${FREERTOS_COMPILE_OPTS})
 target_compile_options(freertos_kernel_port PRIVATE ${FREERTOS_COMPILE_OPTS})
 
 
-# # FreeRTOS needs SEGGER headers
-# target_link_libraries(freertos_kernel PRIVATE segger_header)
+# FreeRTOS needs SEGGER headers
+target_link_libraries(freertos_kernel PRIVATE segger_header)
 
-# target_link_libraries(freertos_kernel_port PRIVATE segger_header)
+target_link_libraries(freertos_kernel_port PRIVATE segger_header)
 
 target_link_libraries(freertos_kernel PRIVATE freertos_config)
 
-# target_link_libraries(segger PRIVATE freertos_kernel)
+target_link_libraries(segger PRIVATE freertos_kernel)
 
-# # SEGGER needs FreeRTOS config
-# target_link_libraries(segger PRIVATE freertos_config)
+target_compile_definitions(segger PRIVATE STM32F407xx)
+target_include_directories(segger PRIVATE ${CMSIS_HEADER})
+
+# SEGGER needs FreeRTOS config
+target_link_libraries(segger PRIVATE freertos_config)
 
 # Link directories setup
 # Must be before executable is added

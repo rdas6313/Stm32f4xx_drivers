@@ -1,6 +1,6 @@
 #ifndef INC_STM32F4XX_I2C_DRIVER_H_
 #define INC_STM32F4XX_I2C_DRIVER_H_
-#include "stm32f407xx.h"
+#include "cstm32f407xx.h"
 
 /* I2C configuration structure */
 
